@@ -20,13 +20,23 @@ export class UserResolver {
   }
 
   @Query(() => User, { name: 'userById', description: 'Find user by id' })
-  findOne(@Args('id', { type: () => String }) id: MongooSchema.Types.ObjectId) {
-    // return this.userService.findOne(id);
+  getUserById(
+    @Args('id', { type: () => String }) id: MongooSchema.Types.ObjectId,
+  ) {
+    return this.userService.getUserById(id);
+  }
+
+  @Query(() => User, {
+    name: 'userByWalletAddress',
+    description: 'Find user by wallet address',
+  })
+  getUserByWallet(@Args('address', { type: () => String }) address: string) {
+    return this.userService.getUserByWalletAddress(address);
   }
 
   @Mutation(() => User)
   updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
-    // return this.userService.update(updateUserInput.id, updateUserInput);
+    return this.userService.updateUser(updateUserInput._id, updateUserInput);
   }
 
   @Mutation(() => User)

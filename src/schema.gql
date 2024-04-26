@@ -11,13 +11,19 @@ type User {
 
 type Query {
   getHello: String!
-  user(id: Int!): User!
+  users: [User!]!
+
+  """Find user by id"""
+  userById(id: String!): User!
+
+  """Find user by wallet address"""
+  userByWalletAddress(address: String!): User!
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
-  removeUser(id: Int!): User!
+  removeUser(id: String!): User!
 }
 
 input CreateUserInput {
@@ -32,7 +38,7 @@ input UpdateUserInput {
   """Example field (placeholder)"""
   exampleField: Int
   name: String
-  email: String
+  email: String!
   walletAddress: String
-  id: String!
+  _id: String!
 }
