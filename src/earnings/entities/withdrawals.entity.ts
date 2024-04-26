@@ -1,14 +1,12 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 
 @ObjectType()
-export class Setting {
+export class Earning {
   @Field(() => Int, { description: 'Example field (placeholder)' })
   exampleField: number;
 }
 
 
-//enum SettingType {limited and unlimited}
-//mint: start and end date
-//royalty: percentage
-// save as draft: boolean
+//amount: string;
+//date: date;
 
