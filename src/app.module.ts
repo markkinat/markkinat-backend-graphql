@@ -11,6 +11,9 @@ import {
 import { MongooseModule, MongooseModuleOptions } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './user/user.module';
+import { CollectionModule } from './collection/collection.module';
+import { SettingsModule } from './settings/settings.module';
+import { EarningsModule } from './earnings/earnings.module';
 
 @Module({
   imports: [
@@ -36,6 +39,9 @@ import { UserModule } from './user/user.module';
       cache: true,
     }),
     UserModule,
+    CollectionModule,
+    SettingsModule,
+    EarningsModule,
   ],
   controllers: [],
   providers: [AppService, AppResolver],
