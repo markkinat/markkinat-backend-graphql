@@ -3,6 +3,7 @@ import { CollectionService } from './collection.service';
 import { Collection } from './entities/collection.entity';
 import { CreateCollectionInput } from './dto/create-collection.input';
 import { UpdateCollectionInput } from './dto/update-collection.input';
+import { Schema as MongooSchema } from 'mongoose';
 
 @Resolver(() => Collection)
 export class CollectionResolver {
@@ -10,7 +11,7 @@ export class CollectionResolver {
 
   @Mutation(() => Collection)
   createCollection(@Args('createCollectionInput') createCollectionInput: CreateCollectionInput) {
-    return this.collectionService.create(createCollectionInput);
+    return this.collectionService.createCollection(createCollectionInput);
   }
 
   @Query(() => [Collection], { name: 'collection' })
@@ -19,17 +20,17 @@ export class CollectionResolver {
   }
 
   @Query(() => Collection, { name: 'collection' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.collectionService.findOne(id);
+  findOne(@Args('id', { type: () => Int }) id: MongooSchema.Types.ObjectId) {
+    return this.collectionService.getCollectionById(id);
   }
 
   @Mutation(() => Collection)
   updateCollection(@Args('updateCollectionInput') updateCollectionInput: UpdateCollectionInput) {
-    return this.collectionService.update(updateCollectionInput.id, updateCollectionInput);
+    return this.collectionService.updateCollectionById(updateCollectionInput.id, updateCollectionInput);
   }
 
   @Mutation(() => Collection)
-  removeCollection(@Args('id', { type: () => Int }) id: number) {
-    return this.collectionService.remove(id);
+  removeCollection(@Args('id', { type: () => Int }) id: MongooSchema.Types.ObjectId) {
+    return this.collectionService.removeCollection(id);
   }
 }

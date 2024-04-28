@@ -9,4 +9,10 @@ export class UpdateUserInput extends PartialType(CreateUserInput) {
 
   @Field(() => String)
   email: string;
+
+  @Field(() => String)
+  name: string;
+
+  @Field(() => String)
+  image?: string;
 }

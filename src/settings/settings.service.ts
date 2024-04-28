@@ -1,26 +1,44 @@
 import { Injectable } from '@nestjs/common';
 import { CreateSettingInput } from './dto/create-setting.input';
 import { UpdateSettingInput } from './dto/update-setting.input';
+import { Setting } from './entities/setting.entity';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model, Schema as MongooSchema } from 'mongoose';
 
 @Injectable()
 export class SettingsService {
-  create(createSettingInput: CreateSettingInput) {
-    return 'This action adds a new setting';
+
+  constructor(
+    @InjectModel(Setting.name) private settingsModel: Model<Setting>,
+  ) { }
+  createSetting(createSettingInput: CreateSettingInput): Setting {
+    try {
+      const createdSettings = new this.settingsModel(createSettingInput);
+      createdSettings.save();
+      return createdSettings.toObject();
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 
-  findAll() {
-    return `This action returns all settings`;
+  async getSettingById(id: MongooSchema.Types.ObjectId) {
+    return this.settingsModel.findById(id).then((foundSetting) => {
+      if (foundSetting === null) throw new Error("Not found...");
+      return foundSetting.toObject();
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} setting`;
+  async updateSettingById(id: MongooSchema.Types.ObjectId, updateSettingInput: UpdateSettingInput) {
+    return this.settingsModel.findOneAndReplace({ _id: id },
+      updateSettingInput,
+      { new: true }
+    ).then(updatedSetting => {
+      if (updatedSetting === null) throw new Error("Not found...");
+      return updatedSetting.toObject();
+    });
   }
 
-  update(id: number, updateSettingInput: UpdateSettingInput) {
-    return `This action updates a #${id} setting`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} setting`;
+  removeSettingById(id: MongooSchema.Types.ObjectId) {
+    return this.settingsModel.findByIdAndDelete({_id: id});
   }
 }

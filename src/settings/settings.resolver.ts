@@ -3,6 +3,7 @@ import { SettingsService } from './settings.service';
 import { Setting } from './entities/setting.entity';
 import { CreateSettingInput } from './dto/create-setting.input';
 import { UpdateSettingInput } from './dto/update-setting.input';
+import { Schema as MongooSchema } from 'mongoose';
 
 @Resolver(() => Setting)
 export class SettingsResolver {
@@ -10,26 +11,26 @@ export class SettingsResolver {
 
   @Mutation(() => Setting)
   createSetting(@Args('createSettingInput') createSettingInput: CreateSettingInput) {
-    return this.settingsService.create(createSettingInput);
+    return this.settingsService.createSetting(createSettingInput);
   }
 
-  @Query(() => [Setting], { name: 'settings' })
-  findAll() {
-    return this.settingsService.findAll();
-  }
+  // @Query(() => [Setting], { name: 'settings' })
+  // findAll() {
+  //   return this.settingsService.findAll();
+  // }
 
   @Query(() => Setting, { name: 'setting' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.settingsService.findOne(id);
+  findOne(@Args('id', { type: () => Int }) id: MongooSchema.Types.ObjectId) {
+    return this.settingsService.getSettingById(id);
   }
 
   @Mutation(() => Setting)
   updateSetting(@Args('updateSettingInput') updateSettingInput: UpdateSettingInput) {
-    return this.settingsService.update(updateSettingInput.id, updateSettingInput);
+    return this.settingsService.updateSettingById(updateSettingInput.id, updateSettingInput);
   }
 
   @Mutation(() => Setting)
-  removeSetting(@Args('id', { type: () => Int }) id: number) {
-    return this.settingsService.remove(id);
+  removeSetting(@Args('id', { type: () => Int }) id: MongooSchema.Types.ObjectId) {
+    return this.settingsService.removeSettingById(id);
   }
 }
