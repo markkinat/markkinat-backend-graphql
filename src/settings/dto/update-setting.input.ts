@@ -11,7 +11,7 @@ export class UpdateSettingInput {
   paymentToken?: string;
 
   @Field(() => SettingType, { nullable: true })
-  collectionType?: SettingType;
+  settingType?: SettingType;
 
   @Field(() => Number, { nullable: true })
   royalty?: number;

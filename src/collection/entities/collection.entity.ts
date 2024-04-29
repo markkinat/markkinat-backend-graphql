@@ -31,7 +31,7 @@ export class Collection {
     contractAddress: String;
 
     @Field(() => String)
-    @Prop()
+    @Prop({ type: [{ type: MongooSchema.Types.ObjectId, ref: 'Collection' }], cascade: true })
     setting: string;
 
     @Field(() => String)

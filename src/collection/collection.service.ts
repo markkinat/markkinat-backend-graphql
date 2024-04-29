@@ -6,21 +6,26 @@ import { Model, Schema as MongooSchema } from 'mongoose';
 import { Collection, CollectionDocument } from './entities/collection.entity';
 import { SettingsService } from 'src/settings/settings.service';
 import { CreateSettingInput } from 'src/settings/dto/create-setting.input';
+import { UserService } from 'src/user/user.service';
+import { User } from 'src/user/entities/user.entity';
 
 @Injectable()
 export class CollectionService {
   constructor(
     @InjectModel(Collection.name) private collectionModel: Model<CollectionDocument>,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private userService: UserService
   ) { }
 
   createCollection(createCollectionInput: CreateCollectionInput): Collection {
     try {
+      const foundUser: Promise<User> = this.userService.getUserByWalletAddress(createCollectionInput.userWalletAddress);
       const createCollection = new this.collectionModel(createCollectionInput);
       const createSetting = new CreateSettingInput();
       const createdSettings = this.settingsService.createSetting(createSetting);
       createCollection.setting = createdSettings.toString();
-      createCollection.save();
+      const createdCollection = createCollection.save();
+      
       return createCollection.toObject();
     } catch(error){
       throw new Error(error);

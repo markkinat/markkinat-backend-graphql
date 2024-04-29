@@ -7,7 +7,7 @@ export class CreateSettingInput {
   paymentToken: string;
 
   @Field(() => SettingType)
-  collectionType: SettingType;
+  settingType: SettingType;
 
   @Field(() => Number)
   royalty: number;

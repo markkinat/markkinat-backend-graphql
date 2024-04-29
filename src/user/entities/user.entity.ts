@@ -27,7 +27,7 @@ export class User {
   image: string;
 
   @Field(() => [Collection])
-  @Prop()
+  @Prop({ type: [{ type: MongooSchema.Types.ObjectId, ref: 'Collection' }], cascade: true })
   userCollections: [Collection];
 }
 

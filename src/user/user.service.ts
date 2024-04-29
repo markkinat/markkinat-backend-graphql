@@ -12,7 +12,7 @@ export class UserService {
     private userModel: Model<UserDocument>,
   ) {}
 
-  create(createUserInput: CreateUserInput) {
+  createUser(createUserInput: CreateUserInput) {
     const createdUser = new this.userModel(createUserInput);
     return createdUser.save();
   }
@@ -45,6 +45,12 @@ export class UserService {
       },
     );
   }
+
+  deleteUserAccount(address: string) {
+    this.userModel.deleteOne({
+      
+    });
+  } 
 
   remove(id: MongooSchema.Types.ObjectId) {
     return this.userModel.deleteOne({
