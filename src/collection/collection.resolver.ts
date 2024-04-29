@@ -29,6 +29,21 @@ export class CollectionResolver {
     return this.collectionService.updateCollectionById(updateCollectionInput.id, updateCollectionInput);
   }
 
+  @Mutation(() => Collection)
+  addCollaboratorToCollection(@Args("id", { type: () => String }) id: MongooSchema.Types.ObjectId,
+                              @Args("collaboratorId") collaboratorId: string,
+                              @Args("adminAddress") adminAddress: string) {
+    return this.collectionService.addCollaborator(id, collaboratorId, adminAddress);
+  }
+
+
+  @Mutation(() => Collection)
+  removeCollaboratorFromCollection(@Args("id", { type: () => String }) id: MongooSchema.Types.ObjectId,
+                                  @Args("collaboratorId") collaboratorId: string,
+                                  @Args("adminAddress") adminAddress: string) {
+    return this.collectionService.removeCollaborator(id, collaboratorId, adminAddress);
+  }
+
   // @Mutation(() => Collection)
   // removeCollection(@Args('id', { type: () => String }) id: MongooSchema.Types.ObjectId) {
   //   return this.collectionService.removeCollection(id);
