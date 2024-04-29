@@ -16,8 +16,5 @@ export class CreateCollectionInput {
   description: string;
 
   @Field()
-  userId: string;
-
-  @Field()
   contractAddress: string;
 }

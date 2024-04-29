@@ -19,7 +19,7 @@ export class User {
   email: string;
 
   @Field(() => String)
-  @Prop()
+  @Prop({unique : true})
   walletAddress: string;
 
   @Field(() => String)
@@ -27,8 +27,8 @@ export class User {
   image: string;
 
   @Field(() => [Collection])
-  @Prop({ type: [{ type: MongooSchema.Types.ObjectId, ref: 'Collection' }], cascade: true })
-  userCollections: [Collection];
+  @Prop({ type: [{ type: MongooSchema.Types.ObjectId, ref: () => Collection }]})
+  userCollections: Collection[];
 }
 
 export type UserDocument = User & Document;

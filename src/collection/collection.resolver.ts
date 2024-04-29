@@ -20,7 +20,7 @@ export class CollectionResolver {
   }
 
   @Query(() => Collection, { name: 'collection' })
-  findOne(@Args('id', { type: () => Int }) id: MongooSchema.Types.ObjectId) {
+  findOne(@Args('id', { type: () => String }) id: MongooSchema.Types.ObjectId) {
     return this.collectionService.getCollectionById(id);
   }
 
@@ -29,8 +29,10 @@ export class CollectionResolver {
     return this.collectionService.updateCollectionById(updateCollectionInput.id, updateCollectionInput);
   }
 
-  @Mutation(() => Collection)
-  removeCollection(@Args('id', { type: () => Int }) id: MongooSchema.Types.ObjectId) {
-    return this.collectionService.removeCollection(id);
-  }
+  // @Mutation(() => Collection)
+  // removeCollection(@Args('id', { type: () => String }) id: MongooSchema.Types.ObjectId) {
+  //   return this.collectionService.removeCollection(id);
+  // }
+
+  
 }

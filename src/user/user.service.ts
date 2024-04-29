@@ -48,7 +48,7 @@ export class UserService {
 
   deleteUserAccount(address: string) {
     this.userModel.deleteOne({
-      
+      walletAddress: address
     });
   } 
 

@@ -24,15 +24,19 @@ export class Collection {
 
     @Field(() => String)
     @Prop()
-    creator: MongooSchema.Types.ObjectId;
+    creator: string;
+
+    @Field(() => Set<String>)
+    @Prop({type: Set<String>})
+    collaborators: Set<String>;
 
     @Field(() => String)
     @Prop()
     contractAddress: String;
 
-    @Field(() => String)
-    @Prop({ type: [{ type: MongooSchema.Types.ObjectId, ref: 'Collection' }], cascade: true })
-    setting: string;
+    @Field(() => Setting)
+    @Prop({ type: [{ type: MongooSchema.Types.ObjectId, ref: () => Setting }]})
+    setting: Setting;
 
     @Field(() => String)
     @Prop()
@@ -44,11 +48,11 @@ export class Collection {
 
     @Field(() => String)
     @Prop()
-    categories: [string];
+    categories: string;
 
     @Field(() => String)
     @Prop()
-    featuredImage: [string];
+    featuredImage: string[];
 
     @Field(() => Boolean)
     @Prop()
