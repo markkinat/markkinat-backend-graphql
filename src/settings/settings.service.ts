@@ -11,11 +11,10 @@ export class SettingsService {
   constructor(
     @InjectModel(Setting.name) private settingsModel: Model<Setting>,
   ) { }
-  createSetting(createSettingInput: CreateSettingInput): Setting {
+  async createSetting(createSettingInput: CreateSettingInput) : Promise<Setting> {
     try {
       const createdSettings = new this.settingsModel(createSettingInput);
-      createdSettings.save();
-      return createdSettings.toObject();
+      return createdSettings.save();
     } catch (error) {
       throw new Error(error);
     }
@@ -24,7 +23,7 @@ export class SettingsService {
   async getSettingById(id: MongooSchema.Types.ObjectId) {
     return this.settingsModel.findById(id).then((foundSetting) => {
       if (foundSetting === null) throw new Error("Not found...");
-      return foundSetting.toObject();
+      return foundSetting;
     });
   }
 

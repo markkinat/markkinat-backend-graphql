@@ -4,16 +4,16 @@ import { SettingType } from '../entities/setting.entity';
 @InputType()
 export class CreateSettingInput {
   @Field(() => String)
-  paymentToken: string;
+  paymentToken: string = "ETH";
 
   @Field(() => SettingType)
-  settingType: SettingType;
+  settingType: SettingType = SettingType.UNLIMITED;
 
   @Field(() => Number)
-  royalty: number;
+  royalty: number = 2;
 
   @Field(() => Boolean)
-  draft: boolean;
+  draft: boolean = false;
 
   @Field(() => Date)
   mintStartDate: Date;

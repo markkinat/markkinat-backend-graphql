@@ -16,25 +16,29 @@ export class CollectionService {
     private userService: UserService
   ) { }
 
-  createCollection(createCollectionInput: CreateCollectionInput): Collection {
+  async createCollection(createCollectionInput: CreateCollectionInput): Promise<Collection> {
     try {
       const foundUser = this.userService.getUserByWalletAddress(createCollectionInput.userWalletAddress);
       const createCollection = new this.collectionModel(createCollectionInput);
       const createSetting = new CreateSettingInput();
-      const createdSettings = this.settingsService.createSetting(createSetting);
+      const createdSettings = await this.settingsService.createSetting(createSetting);
       createCollection.setting = createdSettings;
       createCollection.creator = createCollectionInput.userWalletAddress;
       createCollection.collaborators.add(createCollectionInput.userWalletAddress);
-      const createdCollection = createCollection.save();
-      foundUser.findOneAndUpdate({ walletAddress: createCollectionInput.userWalletAddress }, {$push : {userCollections : createdCollection}})
-      return createCollection.toObject();
+      const createdCollection = await createCollection.save();
+      const coll = (await foundUser).userCollections;
+      coll.push(createdCollection);
+      this.userService.updateUserCollections((await foundUser).walletAddress, coll);
+      return createCollection;
     } catch(error){
       throw new Error(error);
     }
   }
 
-  findAll() {
-    return this.collectionModel.find();
+      // this.userService.updateUserCollections()
+      // await foundUser.f({ walletAddress: createCollectionInput.userWalletAddress }, {$push : {userCollections : createdCollection}})
+  async findAll() {
+    return await this.collectionModel.find();
   }
 
   async getCollectionById(id: MongooSchema.Types.ObjectId) {
@@ -45,7 +49,7 @@ export class CollectionService {
   }
 
   async updateCollectionById(id: MongooSchema.Types.ObjectId, updateCollectionInput: UpdateCollectionInput) {
-    return this.collectionModel.
+    return await this.collectionModel.
       findByIdAndUpdate(id, updateCollectionInput, { new: true })
       .then(updatedCollection => {
       if (updatedCollection === null) throw new Error("could not update collection");
@@ -53,16 +57,16 @@ export class CollectionService {
     });
   }
 
-  addCollaborator(id: MongooSchema.Types.ObjectId, collaboratorAddress: string, adminAddress: string) {
-    return this.collectionModel.findByIdAndUpdate(id).then((collection) => {
+  async addCollaborator(id: MongooSchema.Types.ObjectId, collaboratorAddress: string, adminAddress: string) {
+    return await this.collectionModel.findByIdAndUpdate(id).then((collection) => {
       if (collection.collaborators.has(adminAddress)) {
         collection.collaborators.add(collaboratorAddress);
       } else throw new Error("only collaborator allowed to perform this action...");
     });
   }
 
-  removeCollaborator(id: MongooSchema.Types.ObjectId, collaboratorAddress: string, adminAddress: string) {
-    return this.collectionModel.findByIdAndUpdate(id).then((collection) => {
+  async removeCollaborator(id: MongooSchema.Types.ObjectId, collaboratorAddress: string, adminAddress: string) {
+    return await this.collectionModel.findByIdAndUpdate(id).then((collection) => {
       if (collection.creator === adminAddress) {
         collection.collaborators.delete(collaboratorAddress);
       } else throw new Error("Only Collection creator allowed to perform action...");

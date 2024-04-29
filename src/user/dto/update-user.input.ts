@@ -8,7 +8,10 @@ export class UpdateUserInput extends PartialType(CreateUserInput) {
   _id: MongooSchema.Types.ObjectId;
 
   @Field(() => String)
-  email: string;
+  email?: string;
+
+  @Field()
+  walletAddress: string;
 
   @Field(() => String)
   name: string;

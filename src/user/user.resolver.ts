@@ -19,9 +19,9 @@ export class UserResolver {
     return this.userService.findAll();
   }
 
-  @Query(() => User, { name: 'userById', description: 'Find user by id' })
+  @Query(() => User, { name: 'getUserById' })
   getUserById(
-    @Args('id', { type: () => String }) id: MongooSchema.Types.ObjectId,
+    @Args('id', { type: () => MongooSchema.Types.ObjectId }) id: MongooSchema.Types.ObjectId
   ) {
     return this.userService.getUserById(id);
   }
@@ -30,8 +30,8 @@ export class UserResolver {
     name: 'userByWalletAddress',
     description: 'Find user by wallet address',
   })
-  getUserByWallet(@Args('address', { type: () => String }) address: string) {
-    return this.userService.getUserByWalletAddress(address);
+  async getUserByWallet(@Args('address', { type: () => String }) address: string) {
+    return await this.userService.getUserByWalletAddress(address);
   }
 
   @Mutation(() => User)
@@ -39,10 +39,10 @@ export class UserResolver {
     return this.userService.updateUser(updateUserInput._id, updateUserInput);
   }
 
-  @Mutation(() => User)
-  removeUser(
-    @Args('id', { type: () => String }) id: MongooSchema.Types.ObjectId,
-  ) {
-    return this.userService.remove(id);
-  }
+  // @Mutation(() => User)
+  // removeUser(
+  //   @Args('id', { type: () => String }) id: MongooSchema.Types.ObjectId,
+  // ) {
+  //   return this.userService.remove(id);
+  // }
 }
