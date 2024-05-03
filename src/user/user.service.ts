@@ -23,7 +23,7 @@ export class UserService {
   }
 
   async getUserById(id: MongooSchema.Types.ObjectId) {
-    return await this.userModel.findById(id) ;
+    return await this.userModel.findById(id);
   }
 
   async getUserByWalletAddress(address: string): Promise<User> {
@@ -47,20 +47,23 @@ export class UserService {
     );
   }
 
-
   async updateUserCollections(id: string, newCollections: Collection[]) {
-    return this.userModel.findOneAndUpdate({ walletAddress: id }, {
-      $set: {["userCollections"] : newCollections}, 
-    }, {
-      new: true
-    })
+    return this.userModel.findOneAndUpdate(
+      { walletAddress: id },
+      {
+        $set: { ['userCollections']: newCollections },
+      },
+      {
+        new: true,
+      },
+    );
   }
 
   // deleteUserAccount(address: string) {
   //   this.userModel.deleteOne({
   //     walletAddress: address
   //   });
-  // } 
+  // }
 
   // remove(id: MongooSchema.Types.ObjectId) {
   //   return this.userModel.deleteOne({

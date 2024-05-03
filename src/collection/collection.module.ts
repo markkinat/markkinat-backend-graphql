@@ -7,12 +7,15 @@ import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{
-      name: Collection.name, schema: CollectionSchema
-    }]),
+    MongooseModule.forFeature([
+      {
+        name: Collection.name,
+        schema: CollectionSchema,
+      },
+    ]),
     ConfigModule.forRoot({
-      cache: true
-    })
+      cache: true,
+    }),
   ],
   providers: [CollectionResolver, CollectionService],
 })

@@ -6,61 +6,59 @@ import { Setting } from 'src/settings/entities/setting.entity';
 @ObjectType()
 @Schema()
 export class Collection {
+  @Field(() => String)
+  _id: MongooSchema.Types.ObjectId;
 
-    @Field(() => String)
-    _id: MongooSchema.Types.ObjectId;
+  @Field(() => String)
+  @Prop()
+  name: string;
 
-    @Field(() => String)
-    @Prop()
-    name: string;
+  @Field(() => String)
+  @Prop()
+  image: string;
 
-    @Field(() => String)
-    @Prop()
-    image: string;
+  @Field(() => String)
+  @Prop()
+  description: string;
 
-    @Field(() => String)
-    @Prop()
-    description: string;
+  @Field(() => String)
+  @Prop()
+  creator: string;
 
-    @Field(() => String)
-    @Prop()
-    creator: string;
+  @Field(() => Set<String>)
+  @Prop({ type: Set<String> })
+  collaborators: Set<String>;
 
-    @Field(() => Set<String>)
-    @Prop({type: Set<String>})
-    collaborators: Set<String>;
+  @Field(() => String)
+  @Prop()
+  contractAddress: String;
 
-    @Field(() => String)
-    @Prop()
-    contractAddress: String;
+  @Field(() => Setting)
+  @Prop({ type: [{ type: MongooSchema.Types.ObjectId, ref: () => Setting }] })
+  setting: Setting;
 
-    @Field(() => Setting)
-    @Prop({ type: [{ type: MongooSchema.Types.ObjectId, ref: () => Setting }]})
-    setting: Setting;
+  @Field(() => String)
+  @Prop()
+  contractName: string;
 
-    @Field(() => String)
-    @Prop()
-    contractName: string;
+  @Field(() => String)
+  @Prop()
+  contractSymbol: string;
 
-    @Field(() => String)
-    @Prop()
-    contractSymbol: string;
+  @Field(() => String)
+  @Prop()
+  categories: string;
 
-    @Field(() => String)
-    @Prop()
-    categories: string;
+  @Field(() => String)
+  @Prop()
+  featuredImage: string[];
 
-    @Field(() => String)
-    @Prop()
-    featuredImage: string[];
-
-    @Field(() => Boolean)
-    @Prop()
-    rarity: boolean;
+  @Field(() => Boolean)
+  @Prop()
+  rarity: boolean;
 }
 export type CollectionDocument = Collection & Document;
 export const CollectionSchema = SchemaFactory.createForClass(Collection);
-
 
 //name: string;
 //description: string;

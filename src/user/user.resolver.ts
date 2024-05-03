@@ -21,7 +21,8 @@ export class UserResolver {
 
   @Query(() => User, { name: 'getUserById' })
   getUserById(
-    @Args('id', { type: () => MongooSchema.Types.ObjectId }) id: MongooSchema.Types.ObjectId
+    @Args('id', { type: () => MongooSchema.Types.ObjectId })
+    id: MongooSchema.Types.ObjectId,
   ) {
     return this.userService.getUserById(id);
   }
@@ -30,7 +31,9 @@ export class UserResolver {
     name: 'userByWalletAddress',
     description: 'Find user by wallet address',
   })
-  async getUserByWallet(@Args('address', { type: () => String }) address: string) {
+  async getUserByWallet(
+    @Args('address', { type: () => String }) address: string,
+  ) {
     return await this.userService.getUserByWalletAddress(address);
   }
 

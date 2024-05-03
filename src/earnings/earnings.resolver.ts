@@ -9,7 +9,9 @@ export class EarningsResolver {
   constructor(private readonly earningsService: EarningsService) {}
 
   @Mutation(() => Earning)
-  createEarning(@Args('createEarningInput') createEarningInput: CreateEarningInput) {
+  createEarning(
+    @Args('createEarningInput') createEarningInput: CreateEarningInput,
+  ) {
     return this.earningsService.create(createEarningInput);
   }
 
@@ -24,8 +26,13 @@ export class EarningsResolver {
   }
 
   @Mutation(() => Earning)
-  updateEarning(@Args('updateEarningInput') updateEarningInput: UpdateEarningInput) {
-    return this.earningsService.update(updateEarningInput.id, updateEarningInput);
+  updateEarning(
+    @Args('updateEarningInput') updateEarningInput: UpdateEarningInput,
+  ) {
+    return this.earningsService.update(
+      updateEarningInput.id,
+      updateEarningInput,
+    );
   }
 
   @Mutation(() => Earning)

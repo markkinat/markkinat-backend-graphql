@@ -4,7 +4,7 @@ import { SettingType } from '../entities/setting.entity';
 @InputType()
 export class CreateSettingInput {
   @Field(() => String)
-  paymentToken: string = "ETH";
+  paymentToken: string = 'ETH';
 
   @Field(() => SettingType)
   settingType: SettingType = SettingType.UNLIMITED;

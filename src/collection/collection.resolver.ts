@@ -10,7 +10,9 @@ export class CollectionResolver {
   constructor(private readonly collectionService: CollectionService) {}
 
   @Mutation(() => Collection)
-  createCollection(@Args('createCollectionInput') createCollectionInput: CreateCollectionInput) {
+  createCollection(
+    @Args('createCollectionInput') createCollectionInput: CreateCollectionInput,
+  ) {
     return this.collectionService.createCollection(createCollectionInput);
   }
 
@@ -25,29 +27,43 @@ export class CollectionResolver {
   }
 
   @Mutation(() => Collection)
-  updateCollection(@Args('updateCollectionInput') updateCollectionInput: UpdateCollectionInput) {
-    return this.collectionService.updateCollectionById(updateCollectionInput.id, updateCollectionInput);
+  updateCollection(
+    @Args('updateCollectionInput') updateCollectionInput: UpdateCollectionInput,
+  ) {
+    return this.collectionService.updateCollectionById(
+      updateCollectionInput.id,
+      updateCollectionInput,
+    );
   }
 
   @Mutation(() => Collection)
-  addCollaboratorToCollection(@Args("id", { type: () => String }) id: MongooSchema.Types.ObjectId,
-                              @Args("collaboratorId") collaboratorId: string,
-                              @Args("adminAddress") adminAddress: string) {
-    return this.collectionService.addCollaborator(id, collaboratorId, adminAddress);
+  addCollaboratorToCollection(
+    @Args('id', { type: () => String }) id: MongooSchema.Types.ObjectId,
+    @Args('collaboratorId') collaboratorId: string,
+    @Args('adminAddress') adminAddress: string,
+  ) {
+    return this.collectionService.addCollaborator(
+      id,
+      collaboratorId,
+      adminAddress,
+    );
   }
 
-
   @Mutation(() => Collection)
-  removeCollaboratorFromCollection(@Args("id", { type: () => String }) id: MongooSchema.Types.ObjectId,
-                                  @Args("collaboratorId") collaboratorId: string,
-                                  @Args("adminAddress") adminAddress: string) {
-    return this.collectionService.removeCollaborator(id, collaboratorId, adminAddress);
+  removeCollaboratorFromCollection(
+    @Args('id', { type: () => String }) id: MongooSchema.Types.ObjectId,
+    @Args('collaboratorId') collaboratorId: string,
+    @Args('adminAddress') adminAddress: string,
+  ) {
+    return this.collectionService.removeCollaborator(
+      id,
+      collaboratorId,
+      adminAddress,
+    );
   }
 
   // @Mutation(() => Collection)
   // removeCollection(@Args('id', { type: () => String }) id: MongooSchema.Types.ObjectId) {
   //   return this.collectionService.removeCollection(id);
   // }
-
-  
 }

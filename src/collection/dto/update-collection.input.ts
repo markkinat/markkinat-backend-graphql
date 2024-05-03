@@ -4,7 +4,6 @@ import { Schema as MongooSchema } from 'mongoose';
 
 @InputType()
 export class UpdateCollectionInput extends PartialType(CreateCollectionInput) {
-
   @Field()
   id: MongooSchema.Types.ObjectId;
   @Field()

@@ -2,17 +2,14 @@ import { ObjectType, Field } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Schema as MongooSchema } from 'mongoose';
 
-
-
-export enum SettingType{
+export enum SettingType {
   LIMITED,
-  UNLIMITED
+  UNLIMITED,
 }
 
 @ObjectType()
 @Schema()
 export class Setting {
-  
   @Field(() => String)
   @Prop()
   _id: MongooSchema.Types.ObjectId;
@@ -22,7 +19,7 @@ export class Setting {
   paymentToken: string;
 
   @Field()
-  @Prop({enum : SettingType})
+  @Prop({ enum: SettingType })
   settingType: SettingType;
 
   @Field(() => Number)
@@ -40,14 +37,11 @@ export class Setting {
   @Field(() => Date)
   @Prop()
   mintEndDate: Date;
-
 }
 export type SettingDocument = Setting & Document;
 export const SettingSchema = SchemaFactory.createForClass(Setting);
-
 
 //enum SettingType {limited and unlimited}
 //mint: start and end date
 //royalty: percentage
 // save as draft: boolean
-

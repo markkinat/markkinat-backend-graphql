@@ -6,7 +6,6 @@ export class Earning {
   exampleField: number;
 }
 
-
 //amountEarned: string;
 //amountWithdrawn: string;
 //payment address: string;

@@ -10,7 +10,9 @@ export class SettingsResolver {
   constructor(private readonly settingsService: SettingsService) {}
 
   @Mutation(() => Setting)
-  createSetting(@Args('createSettingInput') createSettingInput: CreateSettingInput) {
+  createSetting(
+    @Args('createSettingInput') createSettingInput: CreateSettingInput,
+  ) {
     return this.settingsService.createSetting(createSettingInput);
   }
 
@@ -25,12 +27,19 @@ export class SettingsResolver {
   }
 
   @Mutation(() => Setting)
-  updateSetting(@Args('updateSettingInput') updateSettingInput: UpdateSettingInput) {
-    return this.settingsService.updateSettingById(updateSettingInput.id, updateSettingInput);
+  updateSetting(
+    @Args('updateSettingInput') updateSettingInput: UpdateSettingInput,
+  ) {
+    return this.settingsService.updateSettingById(
+      updateSettingInput.id,
+      updateSettingInput,
+    );
   }
 
   @Mutation(() => Setting)
-  removeSetting(@Args('id', { type: () => Int }) id: MongooSchema.Types.ObjectId) {
+  removeSetting(
+    @Args('id', { type: () => Int }) id: MongooSchema.Types.ObjectId,
+  ) {
     return this.settingsService.removeSettingById(id);
   }
 }

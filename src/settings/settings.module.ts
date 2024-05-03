@@ -7,12 +7,15 @@ import { CollectionSchema } from 'src/collection/entities/collection.entity';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{
-      name: "Collection_Setting", schema: CollectionSchema
-    }]),
+    MongooseModule.forFeature([
+      {
+        name: 'Collection_Setting',
+        schema: CollectionSchema,
+      },
+    ]),
     ConfigModule.forRoot({
-      cache: true
-    })
+      cache: true,
+    }),
   ],
   providers: [SettingsResolver, SettingsService],
 })
