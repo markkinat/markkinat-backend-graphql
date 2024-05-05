@@ -4,16 +4,10 @@ import { AppService } from './app.service';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
-import {
-  ApolloServerPluginLandingPageLocalDefault,
-  ApolloServerPluginLandingPageProductionDefault,
-} from '@apollo/server/plugin/landingPage/default';
+import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { MongooseModule, MongooseModuleOptions } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './user/user.module';
-import { CollectionModule } from './collection/collection.module';
-import { SettingsModule } from './settings/settings.module';
-import { EarningsModule } from './earnings/earnings.module';
 
 @Module({
   imports: [
@@ -39,9 +33,6 @@ import { EarningsModule } from './earnings/earnings.module';
       cache: true,
     }),
     UserModule,
-    CollectionModule,
-    SettingsModule,
-    EarningsModule,
   ],
   controllers: [],
   providers: [AppService, AppResolver],
