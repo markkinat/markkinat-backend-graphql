@@ -26,15 +26,15 @@ export class CollectionResolver {
     return this.collectionService.getCollectionById(id);
   }
 
-  // @Mutation(() => Collection)
-  // updateCollection(
-  //   @Args('updateCollectionInput') updateCollectionInput: UpdateCollectionInput,
-  // ) {
-  //   return this.collectionService.updateCollectionById(
-  //     updateCollectionInput.id,
-  //     updateCollectionInput,
-  //   );
-  // }
+  @Mutation(() => Collection)
+  updateCollection(
+    @Args('updateCollectionInput') updateCollectionInput: UpdateCollectionInput,
+  ) {
+    return this.collectionService.updateCollectionById(
+      updateCollectionInput._id,
+      updateCollectionInput,
+    );
+  }
 
 //   // @Mutation(() => Collection)
 //   // addCollaboratorToCollection(

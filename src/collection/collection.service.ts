@@ -60,13 +60,15 @@ export class CollectionService {
     id: MongooSchema.Types.ObjectId,
     updateCollectionInput: UpdateCollectionInput,
   ) {
-    return await this.collectionModel
-      .findByIdAndUpdate(id, updateCollectionInput, { new: true })
-      .then((updatedCollection) => {
-        if (updatedCollection === null)
-          throw new Error('could not update collection');
-        return updatedCollection.toObject();
-      });
+    return this.collectionModel.findByIdAndUpdate(
+      id,
+      {
+        $set: updateCollectionInput,
+      },
+      {
+        new: true,
+      },
+    );
   }
 
   // async addCollaborator(

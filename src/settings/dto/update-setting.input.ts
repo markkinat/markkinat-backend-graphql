@@ -4,8 +4,9 @@ import { Schema as MongooSchema } from 'mongoose';
 
 @InputType()
 export class UpdateSettingInput {
-  @Field()
-  id: MongooSchema.Types.ObjectId;
+  @Field(() => String)
+  _id: MongooSchema.Types.ObjectId;
+
   @Field(() => String, { nullable: true })
   paymentToken?: string;
 

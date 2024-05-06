@@ -32,12 +32,24 @@ export class SettingsService {
     id: MongooSchema.Types.ObjectId,
     updateSettingInput: UpdateSettingInput,
   ) {
-    return this.settingsModel
-      .findOneAndReplace({ _id: id }, updateSettingInput, { new: true })
-      .then((updatedSetting) => {
-        if (updatedSetting === null) throw new Error('Not found...');
-        return updatedSetting.toObject();
-      });
+    // return this.settingsModel
+    //   .findOneAndReplace({ _id: id }, updateSettingInput, { new: true })
+    //   .then((updatedSetting) => {
+    //     if (updatedSetting === null) throw new Error('Not found...');
+    //     return updatedSetting.toObject();
+    //   });
+
+     return this.settingsModel.findByIdAndUpdate(
+       id,
+       {
+         $set: updateSettingInput,
+       },
+       {
+         new: true,
+       },
+     );
+    
+    
   }
 
   removeSettingById(id: MongooSchema.Types.ObjectId) {

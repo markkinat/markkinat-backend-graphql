@@ -58,7 +58,9 @@ type Mutation {
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: String!): User!
   createCollection(createCollectionInput: CreateCollectionInput!): Collection!
+  updateCollection(updateCollectionInput: UpdateCollectionInput!): Collection!
   createSetting(createSettingInput: CreateSettingInput!): Setting!
+  updateSetting(updateSettingInput: UpdateSettingInput!): Setting!
   removeSetting(id: Int!): Setting!
 }
 
@@ -87,6 +89,15 @@ input CreateCollectionInput {
   contractAddress: String!
 }
 
+input UpdateCollectionInput {
+  userWalletAddress: String
+  name: String!
+  image: String!
+  description: String!
+  contractAddress: String
+  _id: String!
+}
+
 input CreateSettingInput {
   paymentToken: String! = "ETH"
   dropType: String! = "1"
@@ -94,4 +105,14 @@ input CreateSettingInput {
   draft: Boolean! = true
   mintStartDate: DateTime!
   mintEndDate: DateTime!
+}
+
+input UpdateSettingInput {
+  _id: String!
+  paymentToken: String
+  dropType: String
+  royalty: Float
+  draft: Boolean
+  mintStartDate: DateTime
+  mintEndDate: DateTime
 }
