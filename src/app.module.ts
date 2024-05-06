@@ -41,7 +41,7 @@ import { EarningsModule } from './earnings/earnings.module';
     UserModule,
     CollectionModule,
     SettingsModule,
-    EarningsModule,
+    // EarningsModule,
   ],
   controllers: [],
   providers: [AppService, AppResolver],

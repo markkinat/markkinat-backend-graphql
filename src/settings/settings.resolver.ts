@@ -26,15 +26,15 @@ export class SettingsResolver {
     return this.settingsService.getSettingById(id);
   }
 
-  @Mutation(() => Setting)
-  updateSetting(
-    @Args('updateSettingInput') updateSettingInput: UpdateSettingInput,
-  ) {
-    return this.settingsService.updateSettingById(
-      updateSettingInput.id,
-      updateSettingInput,
-    );
-  }
+  // @Mutation(() => Setting)
+  // updateSetting(
+  //   @Args('updateSettingInput') updateSettingInput: UpdateSettingInput,
+  // ) {
+  //   return this.settingsService.updateSettingById(
+  //     updateSettingInput.id,
+  //     updateSettingInput,
+  //   );
+  // }
 
   @Mutation(() => Setting)
   removeSetting(

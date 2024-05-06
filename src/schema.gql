@@ -5,8 +5,8 @@
 type Setting {
   _id: String!
   paymentToken: String!
-  dropType: Float!
-  royalty: Float!
+  dropType: String!
+  royalty: Int!
   draft: Boolean!
   mintStartDate: DateTime!
   mintEndDate: DateTime!
@@ -40,11 +40,6 @@ type User {
   userCollections: [Collection!]!
 }
 
-type Earning {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
 type Query {
   getHello: String!
   users: [User!]!
@@ -54,11 +49,8 @@ type Query {
 
   """Find user by wallet address"""
   userByWalletAddress(address: String!): User!
-  collection(id: Int!): Collection!
-  settings: [Setting!]!
+  collection(id: String!): Collection!
   setting(id: Int!): Setting!
-  earnings: [Earning!]!
-  earning(id: Int!): Earning!
 }
 
 type Mutation {
@@ -66,14 +58,8 @@ type Mutation {
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: String!): User!
   createCollection(createCollectionInput: CreateCollectionInput!): Collection!
-  updateCollection(updateCollectionInput: UpdateCollectionInput!): Collection!
-  removeCollection(id: Int!): Collection!
   createSetting(createSettingInput: CreateSettingInput!): Setting!
-  updateSetting(updateSettingInput: UpdateSettingInput!): Setting!
   removeSetting(id: Int!): Setting!
-  createEarning(createEarningInput: CreateEarningInput!): Earning!
-  updateEarning(updateEarningInput: UpdateEarningInput!): Earning!
-  removeEarning(id: Int!): Earning!
 }
 
 input CreateUserInput {
@@ -94,34 +80,18 @@ input UpdateUserInput {
 }
 
 input CreateCollectionInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
-input UpdateCollectionInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  userWalletAddress: String!
+  name: String!
+  image: String!
+  description: String!
+  contractAddress: String!
 }
 
 input CreateSettingInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
-input UpdateSettingInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
-}
-
-input CreateEarningInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
-input UpdateEarningInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  paymentToken: String! = "ETH"
+  dropType: String! = "1"
+  royalty: Float! = 2
+  draft: Boolean! = true
+  mintStartDate: DateTime!
+  mintEndDate: DateTime!
 }

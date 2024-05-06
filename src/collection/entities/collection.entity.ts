@@ -29,8 +29,15 @@ export class Collection {
   @Prop()
   contractAddress: string;
 
+  // @Field(() => Setting)
+  // @Prop({ type: [{ type: MongooSchema.Types.ObjectId, ref: () => Setting }] })
+  // setting: setting;
+
   @Field(() => Setting)
-  @Prop({ type: [{ type: MongooSchema.Types.ObjectId, ref: () => Setting }] })
+  @Prop({
+    type: MongooSchema.Types.ObjectId,
+    ref: 'Setting',
+  })
   setting: Setting;
 
   @Field(() => String)

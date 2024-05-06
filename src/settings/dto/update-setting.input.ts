@@ -9,8 +9,8 @@ export class UpdateSettingInput {
   @Field(() => String, { nullable: true })
   paymentToken?: string;
 
-  @Field(() => DropType, { nullable: true })
-  settingType?: DropType;
+  @Field(() => String, { nullable: true })
+  dropType?: DropType;
 
   @Field(() => Number, { nullable: true })
   royalty?: number;
