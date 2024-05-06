@@ -4,6 +4,7 @@ import { UpdateUserInput } from './dto/update-user.input';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from './entities/user.entity';
 import { Model, Schema as MongooSchema } from 'mongoose';
+import { Collection } from 'src/collection/entities/collection.entity';
 
 @Injectable()
 export class UserService {
@@ -50,5 +51,17 @@ export class UserService {
     return this.userModel.deleteOne({
       _id: id,
     });
+  }
+
+  async updateUserCollections(id: string, newCollections: Collection[]) {
+    return this.userModel.findOneAndUpdate(
+      { walletAddress: id },
+      {
+        $set: { ['userCollections']: newCollections },
+      },
+      {
+        new: true,
+      },
+    );
   }
 }

@@ -2,21 +2,42 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Setting {
+  _id: String!
+  paymentToken: String!
+  dropType: Float!
+  royalty: Float!
+  draft: Boolean!
+  mintStartDate: DateTime!
+  mintEndDate: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Collection {
+  _id: String!
+  name: String!
+  image: String!
+  description: String!
+  creator: String!
+  contractAddress: String!
+  setting: Setting!
+  contractName: String!
+  contractSymbol: String!
+  categories: String!
+  featuredImage: String!
+  showRarity: Boolean!
+}
+
 type User {
   _id: String!
   name: String!
   email: String!
   walletAddress: String!
-}
-
-type Collection {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
-type Setting {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  userCollections: [Collection!]!
 }
 
 type Earning {

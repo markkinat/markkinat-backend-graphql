@@ -2,6 +2,18 @@ import { InputType, Int, Field } from '@nestjs/graphql';
 
 @InputType()
 export class CreateCollectionInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @Field()
+  userWalletAddress: string;
+
+  @Field()
+  name: string;
+
+  @Field()
+  image: string;
+
+  @Field()
+  description: string;
+
+  @Field()
+  contractAddress: string;
 }
