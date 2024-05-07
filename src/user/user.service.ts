@@ -17,6 +17,13 @@ export class UserService {
     const createdUser = new this.userModel(createUserInput);
     return createdUser.save();
   }
+  createUser(walletAddress: string) {
+    const createdUser = new this.userModel({
+      walletAddress: walletAddress,
+    });
+    
+    return createdUser.save();
+  }
 
   findAll() {
     return `This action returns all user`;

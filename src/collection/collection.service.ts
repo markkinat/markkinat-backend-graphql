@@ -7,6 +7,8 @@ import { Collection, CollectionDocument } from './entities/collection.entity';
 import { SettingsService } from 'src/settings/settings.service';
 import { CreateSettingInput } from 'src/settings/dto/create-setting.input';
 import { UserService } from 'src/user/user.service';
+import { CreateEarningInput } from 'src/earnings/dto/create-earning.input';
+import { EarningsService } from 'src/earnings/earnings.service';
 
 @Injectable()
 export class CollectionService {
@@ -15,28 +17,41 @@ export class CollectionService {
     private collectionModel: Model<CollectionDocument>,
     private settingsService: SettingsService,
     private userService: UserService,
+    private earningsService: EarningsService,
+    // private ear
   ) {}
 
   async createCollection(
     createCollectionInput: CreateCollectionInput,
   ): Promise<Collection> {
     try {
-      const foundUser = this.userService.getUserByWalletAddress(
-        createCollectionInput.userWalletAddress,
-      );
+      // create user and collection, create setting and assign to collection, create earning and assign to collection
+      const createdUser = await this.userService.create({
+        walletAddress: createCollectionInput.userWalletAddress,
+      });
+
       const createCollection = new this.collectionModel(createCollectionInput);
+      let createdCollection = await createCollection.save();
+
       const createSetting = new CreateSettingInput();
+      createSetting.collectionID = createdCollection._id;
+
       const createdSettings =
         await this.settingsService.createSetting(createSetting);
-      createCollection.setting = createdSettings;
-      createCollection.creator = createCollectionInput.userWalletAddress;
-      const createdCollection = await createCollection.save();
-      const coll = (await foundUser).userCollections;
+
+      const createEarning = new CreateEarningInput();
+      createEarning.collectionID = createCollection._id;
+      const createdEarning =
+        await this.earningsService.createEarnings(createEarning);
+
+      createdCollection.setting = createdSettings;
+      createdCollection.earning = createdEarning;
+      createCollection.creatorId = createdUser._id;
+
+      createdCollection = await createCollection.save();
+      const coll = createdUser.userCollections;
       coll.push(createdCollection);
-      this.userService.updateUserCollections(
-        (await foundUser).walletAddress,
-        coll,
-      );
+      this.userService.updateUserCollections(createdUser.walletAddress, coll);
       return createCollection;
     } catch (error) {
       throw new Error(error);
@@ -70,42 +85,4 @@ export class CollectionService {
       },
     );
   }
-
-  // async addCollaborator(
-  //   id: MongooSchema.Types.ObjectId,
-  //   collaboratorAddress: string,
-  //   adminAddress: string,
-  // ) {
-  //   return await this.collectionModel
-  //     .findByIdAndUpdate(id)
-  //     .then((collection) => {
-  //       if (collection.collaborators.has(adminAddress)) {
-  //         collection.collaborators.add(collaboratorAddress);
-  //       } else
-  //         throw new Error(
-  //           'only collaborator allowed to perform this action...',
-  //         );
-  //     });
-  // }
-
-  // async removeCollaborator(
-  //   id: MongooSchema.Types.ObjectId,
-  //   collaboratorAddress: string,
-  //   adminAddress: string,
-  // ) {
-  //   return await this.collectionModel
-  //     .findByIdAndUpdate(id)
-  //     .then((collection) => {
-  //       if (collection.creator === adminAddress) {
-  //         collection.collaborators.delete(collaboratorAddress);
-  //       } else
-  //         throw new Error(
-  //           'Only Collection creator allowed to perform action...',
-  //         );
-  //     });
-  // }
-
-  // removeCollection(id: MongooSchema.Types.ObjectId) {
-  //   return this.collectionModel.findByIdAndDelete(id);
-  // }
 }

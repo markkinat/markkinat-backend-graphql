@@ -1,4 +1,4 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
+import { InputType, Field } from '@nestjs/graphql';
 
 @InputType()
 export class CreateCollectionInput {
@@ -6,14 +6,17 @@ export class CreateCollectionInput {
   userWalletAddress: string;
 
   @Field()
-  name: string;
+  contractSymbol: string;
 
   @Field()
-  image: string;
+  contractName: string;
+
+  @Field()
+  imageLogo: string;
 
   @Field()
   description: string;
 
-  @Field()
-  contractAddress: string;
+  @Field(() => String)
+  deploymentChain: string = 'Ethereum';
 }

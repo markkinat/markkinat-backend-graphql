@@ -8,11 +8,6 @@ import { UpdateEarningInput } from './dto/update-earning.input';
 export class EarningsResolver {
   constructor(private readonly earningsService: EarningsService) {}
 
-  @Mutation(() => Earning)
-  createEarning(@Args('createEarningInput') createEarningInput: CreateEarningInput) {
-    return this.earningsService.create(createEarningInput);
-  }
-
   @Query(() => [Earning], { name: 'earnings' })
   findAll() {
     return this.earningsService.findAll();

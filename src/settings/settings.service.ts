@@ -39,17 +39,15 @@ export class SettingsService {
     //     return updatedSetting.toObject();
     //   });
 
-     return this.settingsModel.findByIdAndUpdate(
-       id,
-       {
-         $set: updateSettingInput,
-       },
-       {
-         new: true,
-       },
-     );
-    
-    
+    return this.settingsModel.findByIdAndUpdate(
+      id,
+      {
+        $set: updateSettingInput,
+      },
+      {
+        new: true,
+      },
+    );
   }
 
   removeSettingById(id: MongooSchema.Types.ObjectId) {

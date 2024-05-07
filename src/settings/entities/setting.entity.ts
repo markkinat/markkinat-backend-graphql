@@ -23,7 +23,7 @@ export class Setting {
 
   @Field(() => Int)
   @Prop()
-  royalty: number;
+  dropAmount: number;
 
   @Field(() => Boolean)
   @Prop()
@@ -36,6 +36,9 @@ export class Setting {
   @Field(() => Date)
   @Prop()
   mintEndDate: Date;
+
+
+  collectionID: string;
 }
 export type SettingDocument = Setting & Document;
 export const SettingSchema = SchemaFactory.createForClass(Setting);

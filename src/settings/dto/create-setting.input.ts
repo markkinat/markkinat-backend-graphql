@@ -9,15 +9,9 @@ export class CreateSettingInput {
   @Field(() => String)
   dropType: DropType = DropType.OPEN;
 
-  @Field(() => Number)
-  royalty: number = 2;
-
   @Field(() => Boolean)
   draft: boolean = true;
 
-  @Field(() => Date)
-  mintStartDate: Date;
-
-  @Field(() => Date)
-  mintEndDate: Date;
+  @Field(() => String)
+  collectionID: string;
 }

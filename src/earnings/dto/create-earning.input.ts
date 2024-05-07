@@ -1,7 +1,14 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
+import { InputType, Field } from '@nestjs/graphql';
 
 @InputType()
 export class CreateEarningInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @Field(() => String)
+  amountEarned: string = '0.00';
+  @Field(() => String)
+  amountWithdrawn: string = '0.00';
+  @Field(() => String)
+  currentBalance: string = '0.00';
+
+  @Field(() => String)
+  collectionID: string;
 }

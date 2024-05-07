@@ -1,11 +1,26 @@
 import { Injectable } from '@nestjs/common';
 import { CreateEarningInput } from './dto/create-earning.input';
 import { UpdateEarningInput } from './dto/update-earning.input';
+import { Earning } from './entities/earning.entity';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model, Schema as MongooSchema } from 'mongoose';
+import { Withdrawal } from './entities/withdrawals.entity';
 
 @Injectable()
 export class EarningsService {
-  create(createEarningInput: CreateEarningInput) {
-    return 'This action adds a new earning';
+  constructor(
+    @InjectModel(Earning.name) private earningsModel: Model<Earning>,
+    @InjectModel(Withdrawal.name)
+    private withdrawalsModel: Model<Withdrawal>,
+  ) {}
+  createEarnings(createEarningInput: CreateEarningInput) {
+    try {
+      const createdEarning = new this.earningsModel(createEarningInput);
+      return createdEarning.save();
+    } catch (error) {
+      throw new Error(error);
+    }
+    // return 'This action adds a new earning';
   }
 
   findAll() {

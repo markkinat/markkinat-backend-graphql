@@ -1,6 +1,7 @@
 import { ObjectType, Field } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooSchema } from 'mongoose';
+import { Earning } from 'src/earnings/entities/earning.entity';
 import { Setting } from 'src/settings/entities/setting.entity';
 
 @ObjectType()
@@ -11,11 +12,7 @@ export class Collection {
 
   @Field(() => String)
   @Prop()
-  name: string;
-
-  @Field(() => String)
-  @Prop()
-  image: string;
+  imageLogo: string;
 
   @Field(() => String)
   @Prop()
@@ -40,6 +37,13 @@ export class Collection {
   })
   setting: Setting;
 
+  @Field(() => Earning)
+  @Prop({
+    type: MongooSchema.Types.ObjectId,
+    ref: 'Earning',
+  })
+  earning: Earning;
+
   @Field(() => String)
   @Prop()
   contractName: string;
@@ -50,15 +54,27 @@ export class Collection {
 
   @Field(() => String)
   @Prop()
-  categories: string;
+  deploymentChain: string;
 
   @Field(() => String)
   @Prop()
-  featuredImage: string[];
+  categories: string[];
+
+  @Field(() => String)
+  @Prop()
+  featuredImage: string;
 
   @Field(() => Boolean)
   @Prop()
   showRarity: boolean;
+
+  @Field(() => Boolean)
+  @Prop()
+  isPublished: boolean;
+
+  @Field(() => String)
+  @Prop()
+  creatorId: string;
 }
 export type CollectionDocument = Collection & Document;
 export const CollectionSchema = SchemaFactory.createForClass(Collection);
