@@ -21,7 +21,7 @@ export class UserService {
     const createdUser = new this.userModel({
       walletAddress: walletAddress,
     });
-    
+
     return createdUser.save();
   }
 

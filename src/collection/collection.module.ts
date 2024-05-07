@@ -4,10 +4,12 @@ import { CollectionResolver } from './collection.resolver';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Collection, CollectionSchema } from './entities/collection.entity';
 import { ConfigModule } from '@nestjs/config';
+import { rootMongooseTestModule } from 'src/common/helpers/mongoose.helper';
 
 @Global()
 @Module({
   imports: [
+    rootMongooseTestModule(),
     MongooseModule.forFeature([
       {
         name: Collection.name,
