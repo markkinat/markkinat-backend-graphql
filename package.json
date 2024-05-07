@@ -28,6 +28,7 @@
     "@nestjs/graphql": "^12.1.1",
     "@nestjs/mongoose": "^10.0.6",
     "@nestjs/platform-express": "^10.0.0",
+    "chance": "^1.1.11",
     "graphql": "^16.8.1",
     "mongoose": "^8.3.2",
     "reflect-metadata": "^0.2.0",
