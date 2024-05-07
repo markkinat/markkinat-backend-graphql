@@ -69,8 +69,28 @@
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "collectCoverageFrom": [
-      "**/*.(t|j)s"
+      "**/*.(t|j)s",
+      "!main.(t|j)s",
+      "!**/*.module.(t|j)s",
+      "!**/*.input.(t|j)s",
+      "!**/*.entity.(t|j)s",
+      "!**/*.guards.(t|j)s",
+      "!**/*.response.(t|j)s",
+      "!**/*.strategy.(t|j)s",
+      "!**/*.args.(t|j)s",
+      "!**/*.helper.(t|j)s",
+      "!**/*.types.(t|j)s",
+      "!**/*.helpers.(t|j)s",
+      "!**/node_modules/**"
     ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 75,
+        "functions": 50,
+        "lines": 75,
+        "statements": 75
+      }
+    },
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
   }
