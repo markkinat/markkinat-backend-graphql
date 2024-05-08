@@ -35,21 +35,6 @@ export class UserService {
   }
 
   async getUserByWalletAddress(address: string) {
-    console.log('address', address);
-
-    console.log(
-      'this.userModelEMAIL',
-      await this.userModel.findOne({
-        email: address,
-      }),
-    );
-
-    console.log(
-      'this.userModel',
-      await this.userModel.findOne({
-        walletAddress: address,
-      }),
-    );
     return this.userModel.findOne({
       walletAddress: address,
     });
