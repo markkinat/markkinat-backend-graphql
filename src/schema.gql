@@ -2,26 +2,64 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type User {
+type Withdrawal {
   _id: String!
-  name: String!
-  email: String!
-  walletAddress: String!
+  amount: String!
+  date: DateTime!
+  paymentAddress: String!
+  collectionID: String!
 }
 
-type Collection {
-  """Example field (placeholder)"""
-  exampleField: Int!
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Earning {
+  _id: String!
+  amountEarned: String
+  amountWithdrawn: String
+  currentBalance: String
+  paymentAddress: String
+  collectionID: String!
+  withdrawals: [Withdrawal!]!
 }
 
 type Setting {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  _id: String!
+  paymentToken: String!
+  dropType: String!
+  dropAmount: Int
+  draft: Boolean!
+  mintStartDate: DateTime
+  mintEndDate: DateTime
+  collectionID: String!
 }
 
-type Earning {
-  """Example field (placeholder)"""
-  exampleField: Int!
+type Collection {
+  _id: String!
+  imageLogo: String!
+  description: String!
+  contractAddress: String
+  setting: Setting!
+  earning: Earning!
+  contractName: String!
+  contractSymbol: String!
+  urlIdentifier: String
+  deploymentChain: String!
+  categories: [String!]!
+  featuredImage: String
+  showRarity: Boolean!
+  isPublished: Boolean!
+  creatorId: String!
+}
+
+type User {
+  _id: String!
+  name: String
+  email: String
+  walletAddress: String!
+  userCollections: [Collection!]!
 }
 
 type Query {
@@ -33,74 +71,66 @@ type Query {
 
   """Find user by wallet address"""
   userByWalletAddress(address: String!): User!
-  collection(id: Int!): Collection!
-  settings: [Setting!]!
+  AllCollections: [Collection!]!
+  collection(id: String!): Collection!
+  collectionsByUserID(userId: String!): [Collection!]!
+  collectionsByUserWalletAddress(walletAddress: String!): [Collection!]!
   setting(id: Int!): Setting!
   earnings: [Earning!]!
   earning(id: Int!): Earning!
+  userCollectionEarnings(collectionID: String!): [Earning!]!
 }
 
 type Mutation {
-  createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: String!): User!
   createCollection(createCollectionInput: CreateCollectionInput!): Collection!
   updateCollection(updateCollectionInput: UpdateCollectionInput!): Collection!
-  removeCollection(id: Int!): Collection!
   createSetting(createSettingInput: CreateSettingInput!): Setting!
   updateSetting(updateSettingInput: UpdateSettingInput!): Setting!
   removeSetting(id: Int!): Setting!
-  createEarning(createEarningInput: CreateEarningInput!): Earning!
-  updateEarning(updateEarningInput: UpdateEarningInput!): Earning!
   removeEarning(id: Int!): Earning!
-}
-
-input CreateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-  name: String!
-  email: String!
-  walletAddress: String!
+  updateUserPaymentAddress(id: String!, paymentAddress: String!): Earning!
 }
 
 input UpdateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  name: String
-  email: String!
   walletAddress: String
   _id: String!
+  email: String!
 }
 
 input CreateCollectionInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  userWalletAddress: String!
+  contractSymbol: String!
+  contractName: String!
+  imageLogo: String!
+  description: String!
 }
 
 input UpdateCollectionInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  userWalletAddress: String
+  contractSymbol: String
+  contractName: String
+  imageLogo: String
+  description: String!
+  _id: String!
+  name: String!
+  image: String!
 }
 
 input CreateSettingInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  paymentToken: String! = "ETH"
+  dropType: String! = "1"
+  draft: Boolean! = true
+  collectionID: String!
 }
 
 input UpdateSettingInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
-}
-
-input CreateEarningInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
-input UpdateEarningInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  _id: String!
+  paymentToken: String
+  dropType: String
+  dropAmount: Float
+  draft: Boolean
+  mintStartDate: DateTime
+  mintEndDate: DateTime
 }

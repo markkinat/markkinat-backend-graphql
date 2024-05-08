@@ -4,6 +4,7 @@ import { UpdateUserInput } from './dto/update-user.input';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from './entities/user.entity';
 import { Model, Schema as MongooSchema } from 'mongoose';
+import { Collection } from 'src/collection/entities/collection.entity';
 
 @Injectable()
 export class UserService {
@@ -14,6 +15,14 @@ export class UserService {
 
   create(createUserInput: CreateUserInput) {
     const createdUser = new this.userModel(createUserInput);
+    createdUser.email = createUserInput.walletAddress;
+    return createdUser.save();
+  }
+  createUser(walletAddress: string) {
+    const createdUser = new this.userModel({
+      walletAddress: walletAddress,
+    });
+
     return createdUser.save();
   }
 
@@ -21,11 +30,11 @@ export class UserService {
     return `This action returns all user`;
   }
 
-  getUserById(id: MongooSchema.Types.ObjectId) {
+  async getUserById(id: MongooSchema.Types.ObjectId) {
     return this.userModel.findById(id);
   }
 
-  getUserByWalletAddress(address: string) {
+  async getUserByWalletAddress(address: string) {
     return this.userModel.findOne({
       walletAddress: address,
     });
@@ -50,5 +59,17 @@ export class UserService {
     return this.userModel.deleteOne({
       _id: id,
     });
+  }
+
+  async updateUserCollections(id: string, newCollections: Collection[]) {
+    return this.userModel.findOneAndUpdate(
+      { walletAddress: id },
+      {
+        $set: { ['userCollections']: newCollections },
+      },
+      {
+        new: true,
+      },
+    );
   }
 }

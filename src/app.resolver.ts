@@ -10,5 +10,3 @@ export class AppResolver {
     return this.appService.getHello();
   }
 }
-
-
