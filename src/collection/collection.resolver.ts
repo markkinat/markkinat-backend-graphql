@@ -16,16 +16,6 @@ export class CollectionResolver {
     return this.collectionService.createCollection(createCollectionInput);
   }
 
-  @Query(() => [Collection], { name: 'collection' })
-  findAll() {
-    return this.collectionService.findAll();
-  }
-
-  @Query(() => Collection, { name: 'collection' })
-  findOne(@Args('id', { type: () => String }) id: MongooSchema.Types.ObjectId) {
-    return this.collectionService.getCollectionById(id);
-  }
-
   @Mutation(() => Collection)
   updateCollection(
     @Args('updateCollectionInput') updateCollectionInput: UpdateCollectionInput,
@@ -36,34 +26,28 @@ export class CollectionResolver {
     );
   }
 
-//   // @Mutation(() => Collection)
-//   // addCollaboratorToCollection(
-//   //   @Args('id', { type: () => String }) id: MongooSchema.Types.ObjectId,
-//   //   @Args('collaboratorId') collaboratorId: string,
-//   //   @Args('adminAddress') adminAddress: string,
-//   // ) {
-//   //   return this.collectionService.addCollaborator(
-//   //     id,
-//   //     collaboratorId,
-//   //     adminAddress,
-//   //   );
-//   // }
+  @Query(() => [Collection], { name: 'AllCollections' })
+  findAll() {
+    return this.collectionService.findAll();
+  }
 
-//   // @Mutation(() => Collection)
-//   // removeCollaboratorFromCollection(
-//   //   @Args('id', { type: () => String }) id: MongooSchema.Types.ObjectId,
-//   //   @Args('collaboratorId') collaboratorId: string,
-//   //   @Args('adminAddress') adminAddress: string,
-//   // ) {
-//   //   return this.collectionService.removeCollaborator(
-//   //     id,
-//   //     collaboratorId,
-//   //     adminAddress,
-//   //   );
-//   // }
+  @Query(() => Collection, { name: 'collection' })
+  findOne(@Args('id', { type: () => String }) id: MongooSchema.Types.ObjectId) {
+    return this.collectionService.getCollectionById(id);
+  }
 
-//   // @Mutation(() => Collection)
-//   // removeCollection(@Args('id', { type: () => String }) id: MongooSchema.Types.ObjectId) {
-//   //   return this.collectionService.removeCollection(id);
-//   // }
+  // get all collections by user id
+  @Query(() => [Collection], { name: 'collectionsByUserID' })
+  findAllByUserId(@Args('userId', { type: () => String }) userId: string) {
+    return this.collectionService.getUserCollections(userId);
+  }
+  // get all collections by user wallet address
+  @Query(() => [Collection], { name: 'collectionsByUserWalletAddress' })
+  findAllByUserWalletAddress(
+    @Args('walletAddress', { type: () => String }) walletAddress: string,
+  ) {
+    return this.collectionService.getUserCollectionsByWalletAddress(
+      walletAddress,
+    );
+  }
 }

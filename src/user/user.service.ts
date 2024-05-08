@@ -15,6 +15,7 @@ export class UserService {
 
   create(createUserInput: CreateUserInput) {
     const createdUser = new this.userModel(createUserInput);
+    createdUser.email = createUserInput.walletAddress;
     return createdUser.save();
   }
   createUser(walletAddress: string) {
@@ -29,11 +30,26 @@ export class UserService {
     return `This action returns all user`;
   }
 
-  getUserById(id: MongooSchema.Types.ObjectId) {
+  async getUserById(id: MongooSchema.Types.ObjectId) {
     return this.userModel.findById(id);
   }
 
-  getUserByWalletAddress(address: string) {
+  async getUserByWalletAddress(address: string) {
+    console.log('address', address);
+
+    console.log(
+      'this.userModelEMAIL',
+      await this.userModel.findOne({
+        email: address,
+      }),
+    );
+
+    console.log(
+      'this.userModel',
+      await this.userModel.findOne({
+        walletAddress: address,
+      }),
+    );
     return this.userModel.findOne({
       walletAddress: address,
     });

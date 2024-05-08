@@ -18,11 +18,7 @@ export class Collection {
   @Prop()
   description: string;
 
-  @Field(() => String)
-  @Prop()
-  creator: string;
-
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   @Prop()
   contractAddress: string;
 
@@ -52,23 +48,23 @@ export class Collection {
   @Prop()
   contractSymbol: string;
 
-  @Field(() => String)
+  @Field(() => String, { defaultValue: 'Ethereum' })
   @Prop()
   deploymentChain: string;
 
-  @Field(() => String)
+  @Field(() => [String])
   @Prop()
   categories: string[];
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   @Prop()
   featuredImage: string;
 
-  @Field(() => Boolean)
+  @Field(() => Boolean, { defaultValue: false })
   @Prop()
   showRarity: boolean;
 
-  @Field(() => Boolean)
+  @Field(() => Boolean, { defaultValue: false })
   @Prop()
   isPublished: boolean;
 

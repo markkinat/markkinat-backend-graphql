@@ -21,23 +21,24 @@ export class Setting {
   @Prop()
   dropType: DropType;
 
-  @Field(() => Int)
+  @Field(() => Int, { nullable: true })
   @Prop()
   dropAmount: number;
 
-  @Field(() => Boolean)
+  @Field(() => Boolean, { defaultValue: true })
   @Prop()
   draft: boolean;
 
-  @Field(() => Date)
+  @Field(() => Date, { nullable: true })
   @Prop()
   mintStartDate: Date;
 
-  @Field(() => Date)
+  @Field(() => Date, { nullable: true })
   @Prop()
   mintEndDate: Date;
 
-
+  @Field(() => String)
+  @Prop()
   collectionID: string;
 }
 export type SettingDocument = Setting & Document;

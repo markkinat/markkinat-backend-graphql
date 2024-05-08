@@ -10,11 +10,11 @@ export class User {
   _id: MongooSchema.Types.ObjectId;
 
   // Add user properties
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   @Prop()
   name: string;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   @Prop({ unique: true })
   email: string;
 

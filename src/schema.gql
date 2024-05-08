@@ -17,10 +17,10 @@ scalar DateTime
 
 type Earning {
   _id: String!
-  amountEarned: String!
-  amountWithdrawn: String!
-  currentBalance: String!
-  paymentAddress: String!
+  amountEarned: String
+  amountWithdrawn: String
+  currentBalance: String
+  paymentAddress: String
   collectionID: String!
   withdrawals: [Withdrawal!]!
 }
@@ -29,25 +29,25 @@ type Setting {
   _id: String!
   paymentToken: String!
   dropType: String!
-  dropAmount: Int!
+  dropAmount: Int
   draft: Boolean!
-  mintStartDate: DateTime!
-  mintEndDate: DateTime!
+  mintStartDate: DateTime
+  mintEndDate: DateTime
+  collectionID: String!
 }
 
 type Collection {
   _id: String!
   imageLogo: String!
   description: String!
-  creator: String!
-  contractAddress: String!
+  contractAddress: String
   setting: Setting!
   earning: Earning!
   contractName: String!
   contractSymbol: String!
   deploymentChain: String!
-  categories: String!
-  featuredImage: String!
+  categories: [String!]!
+  featuredImage: String
   showRarity: Boolean!
   isPublished: Boolean!
   creatorId: String!
@@ -55,8 +55,8 @@ type Collection {
 
 type User {
   _id: String!
-  name: String!
-  email: String!
+  name: String
+  email: String
   walletAddress: String!
   userCollections: [Collection!]!
 }
@@ -70,7 +70,10 @@ type Query {
 
   """Find user by wallet address"""
   userByWalletAddress(address: String!): User!
+  AllCollections: [Collection!]!
   collection(id: String!): Collection!
+  collectionsByUserID(userId: String!): [Collection!]!
+  collectionsByUserWalletAddress(walletAddress: String!): [Collection!]!
   setting(id: Int!): Setting!
   earnings: [Earning!]!
   earning(id: Int!): Earning!
@@ -100,7 +103,6 @@ input CreateCollectionInput {
   contractName: String!
   imageLogo: String!
   description: String!
-  deploymentChain: String! = "Ethereum"
 }
 
 input UpdateCollectionInput {
@@ -109,7 +111,6 @@ input UpdateCollectionInput {
   contractName: String
   imageLogo: String
   description: String!
-  deploymentChain: String = "Ethereum"
   _id: String!
   name: String!
   image: String!
@@ -133,9 +134,6 @@ input UpdateSettingInput {
 }
 
 input UpdateEarningInput {
-  amountEarned: String = "0.00"
-  amountWithdrawn: String = "0.00"
-  currentBalance: String = "0.00"
   collectionID: String
   id: Int!
 }

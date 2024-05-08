@@ -9,6 +9,7 @@ import { CreateSettingInput } from 'src/settings/dto/create-setting.input';
 import { UserService } from 'src/user/user.service';
 import { CreateEarningInput } from 'src/earnings/dto/create-earning.input';
 import { EarningsService } from 'src/earnings/earnings.service';
+import { error } from 'console';
 
 @Injectable()
 export class CollectionService {
@@ -30,6 +31,8 @@ export class CollectionService {
         walletAddress: createCollectionInput.userWalletAddress,
       });
 
+      console.log('createdUser', createdUser);
+
       const createCollection = new this.collectionModel(createCollectionInput);
       let createdCollection = await createCollection.save();
 
@@ -40,7 +43,9 @@ export class CollectionService {
         await this.settingsService.createSetting(createSetting);
 
       const createEarning = new CreateEarningInput();
-      createEarning.collectionID = createCollection._id;
+      createEarning.collectionID = createdCollection._id;
+
+      console.log('createEarning=createEarning=createEarning', createEarning);
       const createdEarning =
         await this.earningsService.createEarnings(createEarning);
 
@@ -84,5 +89,36 @@ export class CollectionService {
         new: true,
       },
     );
+  }
+
+  // get all collections of a user
+  async getUserCollections(userId: string) {
+    const collections = await this.collectionModel.find({
+      creatorId: userId,
+    });
+
+    // if (!collections) throw new Error('Not found...');
+    return collections;
+  }
+
+  //get user collection by wallet address
+  async getUserCollectionsByWalletAddress(walletAddress: string) {
+    // get user by wallet address
+    const user = await this.userService.getUserByWalletAddress(walletAddress);
+
+    console.log('user', user);
+    // if (!user) throw new error('User with Wallet Addres');
+    if (user === null)
+      throw new Error('User with Wallet Address Does not Exist');
+
+    // get user collections
+
+    const collections = await this.collectionModel.find({
+      creatorId: user._id,
+    });
+
+    if (!collections) throw new Error('Not found...');
+
+    return collections;
   }
 }

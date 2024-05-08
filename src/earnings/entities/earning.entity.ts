@@ -8,19 +8,19 @@ export class Earning {
   @Field(() => String)
   _id: MongooSchema.Types.ObjectId;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true, defaultValue: '0.00' })
   @Prop()
   amountEarned: string;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true, defaultValue: '0.00' })
   @Prop()
   amountWithdrawn: string;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true, defaultValue: '0.00' })
   @Prop()
   currentBalance: string;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   @Prop()
   paymentAddress: string;
 
@@ -37,4 +37,3 @@ export class Earning {
 
 export type EarningDocument = Earning & Document;
 export const EarningSchema = SchemaFactory.createForClass(Earning);
-
