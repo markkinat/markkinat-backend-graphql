@@ -19,8 +19,13 @@ export class EarningsResolver {
   }
 
   @Mutation(() => Earning)
-  updateEarning(@Args('updateEarningInput') updateEarningInput: UpdateEarningInput) {
-    return this.earningsService.update(updateEarningInput.id, updateEarningInput);
+  updateEarning(
+    @Args('updateEarningInput') updateEarningInput: UpdateEarningInput,
+  ) {
+    return this.earningsService.update(
+      updateEarningInput.id,
+      updateEarningInput,
+    );
   }
 
   @Mutation(() => Earning)

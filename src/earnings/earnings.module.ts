@@ -6,7 +6,6 @@ import { ConfigModule } from '@nestjs/config';
 import { Earning, EarningSchema } from './entities/earning.entity';
 import { Withdrawal, WithdrawalSchema } from './entities/withdrawals.entity';
 
-
 @Global()
 @Module({
   imports: [

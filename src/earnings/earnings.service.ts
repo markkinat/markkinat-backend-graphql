@@ -13,7 +13,9 @@ export class EarningsService {
     @InjectModel(Withdrawal.name)
     private withdrawalsModel: Model<Withdrawal>,
   ) {}
-  createEarnings(createEarningInput: CreateEarningInput) {
+  async createEarnings(
+    createEarningInput: CreateEarningInput,
+  ): Promise<Earning> {
     try {
       const createdEarning = new this.earningsModel(createEarningInput);
       return createdEarning.save();

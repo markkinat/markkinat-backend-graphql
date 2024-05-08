@@ -1,9 +1,10 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { Prop, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Schema as MongooSchema } from 'mongoose';
 import { Withdrawal } from './withdrawals.entity';
 
 @ObjectType()
+@Schema()
 export class Earning {
   @Field(() => String)
   _id: MongooSchema.Types.ObjectId;

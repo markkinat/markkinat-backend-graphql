@@ -26,12 +26,20 @@ export class CollectionService {
     createCollectionInput: CreateCollectionInput,
   ): Promise<Collection> {
     try {
-      // create user and collection, create setting and assign to collection, create earning and assign to collection
-      const createdUser = await this.userService.create({
-        walletAddress: createCollectionInput.userWalletAddress,
-      });
+      let createdUser;
+      // check if user exissts
+      const foundUser = await this.userService.getUserByWalletAddress(
+        createCollectionInput.userWalletAddress,
+      );
 
-      console.log('createdUser', createdUser);
+      createdUser = foundUser;
+
+      if (!foundUser) {
+        createdUser = await this.userService.create({
+          walletAddress: createCollectionInput.userWalletAddress,
+        });
+      }
+      // create user and collection, create setting and assign to collection, create earning and assign to collection
 
       const createCollection = new this.collectionModel(createCollectionInput);
       let createdCollection = await createCollection.save();
@@ -45,7 +53,6 @@ export class CollectionService {
       const createEarning = new CreateEarningInput();
       createEarning.collectionID = createdCollection._id;
 
-      console.log('createEarning=createEarning=createEarning', createEarning);
       const createdEarning =
         await this.earningsService.createEarnings(createEarning);
 
