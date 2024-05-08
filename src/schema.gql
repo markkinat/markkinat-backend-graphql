@@ -86,6 +86,8 @@ type Mutation {
   removeUser(id: String!): User!
   createCollection(createCollectionInput: CreateCollectionInput!): Collection!
   updateCollection(updateCollectionInput: UpdateCollectionInput!): Collection!
+  publishCollection(id: String!): Collection!
+  updateCollectionContractAddress(id: String!, contractAddress: String!): Collection!
   createSetting(createSettingInput: CreateSettingInput!): Setting!
   updateSetting(updateSettingInput: UpdateSettingInput!): Setting!
   removeSetting(id: Int!): Setting!
@@ -111,11 +113,15 @@ input UpdateCollectionInput {
   userWalletAddress: String
   contractSymbol: String
   contractName: String
-  imageLogo: String
+  imageLogo: String!
   description: String!
   _id: String!
   name: String!
-  image: String!
+  contractAddress: String!
+  featuredImage: String!
+  urlIdentifier: String!
+  showRarity: Boolean!
+  categories: [String!]!
 }
 
 input CreateSettingInput {
@@ -127,10 +133,10 @@ input CreateSettingInput {
 
 input UpdateSettingInput {
   _id: String!
-  paymentToken: String
-  dropType: String
-  dropAmount: Float
-  draft: Boolean
-  mintStartDate: DateTime
-  mintEndDate: DateTime
+  paymentToken: String!
+  dropType: String!
+  dropAmount: Float!
+  draft: Boolean!
+  mintStartDate: DateTime!
+  mintEndDate: DateTime!
 }

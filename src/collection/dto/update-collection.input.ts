@@ -11,8 +11,23 @@ export class UpdateCollectionInput extends PartialType(CreateCollectionInput) {
   name?: string;
 
   @Field(() => String)
-  image?: string;
+  imageLogo?: string;
 
   @Field(() => String)
   description?: string;
+
+  @Field(() => String)
+  contractAddress?: string;
+
+  @Field(() => String)
+  featuredImage?: string;
+
+  @Field(() => String)
+  urlIdentifier?: string;
+
+  @Field(() => Boolean)
+  showRarity?: boolean;
+
+  @Field(() => [String])
+  categories?: string[];
 }

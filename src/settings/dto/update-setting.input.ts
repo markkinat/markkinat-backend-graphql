@@ -7,21 +7,21 @@ export class UpdateSettingInput {
   @Field(() => String)
   _id: MongooSchema.Types.ObjectId;
 
-  @Field(() => String, { nullable: true })
+  @Field(() => String)
   paymentToken?: string;
 
-  @Field(() => String, { nullable: true })
+  @Field(() => String)
   dropType?: DropType;
 
-  @Field(() => Number, { nullable: true })
+  @Field(() => Number)
   dropAmount?: number;
 
-  @Field(() => Boolean, { nullable: true })
+  @Field(() => Boolean)
   draft?: boolean;
 
-  @Field(() => Date, { nullable: true })
+  @Field(() => Date)
   mintStartDate?: Date;
 
-  @Field(() => Date, { nullable: true })
+  @Field(() => Date)
   mintEndDate?: Date;
 }
