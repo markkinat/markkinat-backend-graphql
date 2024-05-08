@@ -32,13 +32,16 @@ export class SettingsService {
     id: MongooSchema.Types.ObjectId,
     updateSettingInput: UpdateSettingInput,
   ) {
-    // return this.settingsModel
-    //   .findOneAndReplace({ _id: id }, updateSettingInput, { new: true })
-    //   .then((updatedSetting) => {
-    //     if (updatedSetting === null) throw new Error('Not found...');
-    //     return updatedSetting.toObject();
-    //   });
+    //get the settings by id
+    const foundSetting = await this.settingsModel.findById(id);
 
+    if (!foundSetting) {
+      throw new Error('Not found...');
+    }
+
+    if (foundSetting.draft)
+      throw new Error('Cannot update published collections');
+    //update the settings
     return this.settingsModel.findByIdAndUpdate(
       id,
       {
@@ -53,4 +56,6 @@ export class SettingsService {
   removeSettingById(id: MongooSchema.Types.ObjectId) {
     return this.settingsModel.findByIdAndDelete({ _id: id });
   }
+
+  //
 }

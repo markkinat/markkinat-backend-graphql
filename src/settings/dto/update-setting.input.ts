@@ -14,7 +14,7 @@ export class UpdateSettingInput {
   dropType?: DropType;
 
   @Field(() => Number, { nullable: true })
-  royalty?: number;
+  dropAmount?: number;
 
   @Field(() => Boolean, { nullable: true })
   draft?: boolean;

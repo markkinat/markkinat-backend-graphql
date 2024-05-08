@@ -45,6 +45,7 @@ type Collection {
   earning: Earning!
   contractName: String!
   contractSymbol: String!
+  urlIdentifier: String
   deploymentChain: String!
   categories: [String!]!
   featuredImage: String
@@ -77,6 +78,7 @@ type Query {
   setting(id: Int!): Setting!
   earnings: [Earning!]!
   earning(id: Int!): Earning!
+  userCollectionEarnings(collectionID: String!): [Earning!]!
 }
 
 type Mutation {
@@ -87,8 +89,8 @@ type Mutation {
   createSetting(createSettingInput: CreateSettingInput!): Setting!
   updateSetting(updateSettingInput: UpdateSettingInput!): Setting!
   removeSetting(id: Int!): Setting!
-  updateEarning(updateEarningInput: UpdateEarningInput!): Earning!
   removeEarning(id: Int!): Earning!
+  updateUserPaymentAddress(id: String!, paymentAddress: String!): Earning!
 }
 
 input UpdateUserInput {
@@ -127,13 +129,8 @@ input UpdateSettingInput {
   _id: String!
   paymentToken: String
   dropType: String
-  royalty: Float
+  dropAmount: Float
   draft: Boolean
   mintStartDate: DateTime
   mintEndDate: DateTime
-}
-
-input UpdateEarningInput {
-  collectionID: String
-  id: Int!
 }

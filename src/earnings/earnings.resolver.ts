@@ -3,6 +3,8 @@ import { EarningsService } from './earnings.service';
 import { Earning } from './entities/earning.entity';
 import { CreateEarningInput } from './dto/create-earning.input';
 import { UpdateEarningInput } from './dto/update-earning.input';
+import { Schema as MongooSchema } from 'mongoose';
+
 
 @Resolver(() => Earning)
 export class EarningsResolver {
@@ -18,18 +20,26 @@ export class EarningsResolver {
     return this.earningsService.findOne(id);
   }
 
-  @Mutation(() => Earning)
-  updateEarning(
-    @Args('updateEarningInput') updateEarningInput: UpdateEarningInput,
+  // get user collection earnings
+  @Query(() => [Earning], { name: 'userCollectionEarnings' })
+  getUserCollectionEarnings(
+    @Args('collectionID', { type: () => String }) collectionID: string,
   ) {
-    return this.earningsService.update(
-      updateEarningInput.id,
-      updateEarningInput,
-    );
+    return this.earningsService.getUserCollectionEarnings(collectionID);
   }
 
   @Mutation(() => Earning)
   removeEarning(@Args('id', { type: () => Int }) id: number) {
     return this.earningsService.remove(id);
+  }
+
+  //update user earnings payment address
+  @Mutation(() => Earning)
+  updateUserPaymentAddress(
+    @Args('id', { type: () => String }) id: MongooSchema.Types.ObjectId,
+
+    @Args('paymentAddress', { type: () => String }) paymentAddress: string,
+  ) {
+    return this.earningsService.updateUserPaymentAddress(id, paymentAddress);
   }
 }

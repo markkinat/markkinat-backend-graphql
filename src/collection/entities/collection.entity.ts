@@ -48,6 +48,10 @@ export class Collection {
   @Prop()
   contractSymbol: string;
 
+  @Field(() => String, { nullable: true })
+  @Prop()
+  urlIdentifier: string;
+
   @Field(() => String, { defaultValue: 'Ethereum' })
   @Prop()
   deploymentChain: string;

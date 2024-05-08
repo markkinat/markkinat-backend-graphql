@@ -25,16 +25,36 @@ export class EarningsService {
     // return 'This action adds a new earning';
   }
 
+  // get user collection earnings
+  async getUserCollectionEarnings(collectionID: string) {
+    return this.earningsModel.find({
+      collectionID: collectionID,
+    });
+  }
+
+  async updateUserPaymentAddress(
+    id: MongooSchema.Types.ObjectId,
+    paymentAddress: string,
+  ) {
+    return this.earningsModel.findByIdAndUpdate(
+      id,
+      {
+        $set: {
+          paymentAddress: paymentAddress,
+        },
+      },
+      {
+        new: true,
+      },
+    );
+  }
+
   findAll() {
     return `This action returns all earnings`;
   }
 
   findOne(id: number) {
     return `This action returns a #${id} earning`;
-  }
-
-  update(id: number, updateEarningInput: UpdateEarningInput) {
-    return `This action updates a #${id} earning`;
   }
 
   remove(id: number) {
