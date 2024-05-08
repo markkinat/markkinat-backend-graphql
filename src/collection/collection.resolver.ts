@@ -26,6 +26,26 @@ export class CollectionResolver {
     );
   }
 
+  // publish collection
+  @Mutation(() => Collection)
+  publishCollection(
+    @Args('id', { type: () => String }) id: MongooSchema.Types.ObjectId,
+  ) {
+    return this.collectionService.publishCollection(id);
+  }
+
+  // update collection with contract address
+  @Mutation(() => Collection)
+  updateCollectionContractAddress(
+    @Args('id', { type: () => String }) id: MongooSchema.Types.ObjectId,
+    @Args('contractAddress', { type: () => String }) contractAddress: string,
+  ) {
+    return this.collectionService.updateCollectionContractAddress(
+      id,
+      contractAddress,
+    );
+  }
+
   @Query(() => [Collection], { name: 'AllCollections' })
   findAll() {
     return this.collectionService.findAll();

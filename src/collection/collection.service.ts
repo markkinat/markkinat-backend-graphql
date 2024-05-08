@@ -128,4 +128,41 @@ export class CollectionService {
 
     return collections;
   }
+
+  async publishCollection(id: MongooSchema.Types.ObjectId) {
+    //get the collection by id
+    const foundCollection = await this.collectionModel.findById(id);
+
+    if (!foundCollection) {
+      throw new Error('Not found...');
+    }
+
+    const collectionSettings = foundCollection.setting;
+    if (!collectionSettings.draft && foundCollection.isPublished)
+      throw new Error('Cannot publish a published collection');
+
+    collectionSettings.draft = false;
+    foundCollection.isPublished = true;
+
+    //update the collection
+    return foundCollection.save();
+  }
+
+  // update collection with contract address
+  async updateCollectionContractAddress(
+    id: MongooSchema.Types.ObjectId,
+    contractAddress: string,
+  ) {
+    return this.collectionModel.findByIdAndUpdate(
+      id,
+      {
+        $set: {
+          contractAddress: contractAddress,
+        },
+      },
+      {
+        new: true,
+      },
+    );
+  }
 }
